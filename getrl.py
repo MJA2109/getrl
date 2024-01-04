@@ -19,6 +19,12 @@ append_delimit=['echo', delimit]
 print("Getrl")
 print(div)
 
+def convert_dict_val_to_int(dp_core_stat):
+    #print("Called:", convert_dict_val_to_int.__name__)
+    print(dp_core_stat)
+    return dp_core_stat
+
+#write stdoutput of command to file
 while runtime != 0:
     time.localtime()
     print("Dumping DP CPU usage stats...")
@@ -28,6 +34,7 @@ while runtime != 0:
     print(div)
     time.sleep(interval)
 
+
 with open('dp_cpu_stats.txt') as dp_cpu_stats:
     for line in dp_cpu_stats:
         if 'CPU Usage' not in line:
@@ -35,11 +42,16 @@ with open('dp_cpu_stats.txt') as dp_cpu_stats:
                 key, val  = line.strip().split(':')
                 dp_core_stat[key.strip()] = val.strip()
             elif not line.strip():
-                dp_core_stats.append(dp_core_stat.copy())
+                processed_dp_core_stat = convert_dict_val_to_int(dp_core_stat.copy())
+                dp_core_stats.append(processed_dp_core_stat.copy())
                 dp_core_stat.clear()
-
             if delimit in line:
                 dp_stats.append(dp_core_stats.copy())
                 dp_core_stats.clear()
     print(dp_stats)
     print('No. of entries,', len(dp_stats))
+
+
+
+
+
